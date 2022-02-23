@@ -1,43 +1,37 @@
 
-import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Details from './Page/Details';
 
-const url = 'http://127.0.0.1:8000/api/v1/blog/'
+import Home from "./Page/Home";
+
+
+
+
 const App = () => {
-
-  
-    const [first, setfirst] = useState([])
-
-    const get_details = async () => {
-      const res = await fetch(url);
-      const users = await res.json()
-      setfirst(users.data)
-      console.log(users.data);
-  }
-
-
-  useEffect(() => {
-    
-    get_details()
-    return () => {
-      
-    }
-  }, [])
-  
 
 
   return ( 
-   
 
-    <> 
-        <h1> samheart</h1>
-          {first.map( data => {
-            return(
-              <div key={data._id}>
-                    {data.name}
-              </div>
-            )
-          })}
-    </>
+    <Router>  
+    
+    <h1> Welcome</h1>
+    <Switch>
+
+        <Route exact path='/'>
+            <Home  /> 
+        </Route>
+
+        <Route  path='/:id'>
+            <Details  /> 
+        </Route>
+      
+
+
+    </Switch>
+
+    
+    
+    </Router>
 
    );
 }

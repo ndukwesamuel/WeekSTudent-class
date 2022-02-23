@@ -1,7 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose');
 
-var cors = require("cors");
+const  cors = require("cors");
 
 const app = express()
 const port = 8000
@@ -10,7 +10,8 @@ const BlogRoutes = require('./routes/blogRoutes')
 
 
 // middleware
-// app.use(cors());
+app.use(cors());
+
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 mongoose.connect('mongodb://localhost:27017/CwayBlog')
@@ -18,6 +19,10 @@ mongoose.connect('mongodb://localhost:27017/CwayBlog')
 .catch((err) => console.log(err))
 
 app.use('/api/v1/blog/',   BlogRoutes )
+
+
+
+
 // app.use('/', BlogRoutes )
 
 
