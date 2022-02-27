@@ -11,9 +11,11 @@ const Home = () => {
     const get_All_data = async () => {
         const res = await fetch(url)
         const blogs = await res.json()
-
+        console.log(blogs);
+        console.log(blogs.data);
+        console.log(blogs.message);
         setIsPending(false)
-        setData(blogs)
+        setData(blogs.data)
     }
 
     useEffect(() => {

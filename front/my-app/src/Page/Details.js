@@ -1,11 +1,17 @@
 import { useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
-const urlDetails = 'http://127.0.0.1:8000/api/v1/blog/'
+const urlDetails = 'http://127.0.0.1:8000/details/'
+const urlDelete = 'http://127.0.0.1:8000/delete/'
+
+
 
 
 
 const Details = () => {
+const history = useHistory()
+
     const {id} = useParams()
     console.log(id);
     const url = urlDetails + id
@@ -18,11 +24,21 @@ const Details = () => {
         const res = await fetch(url)
         const blogs = await res.json()
         console.log(blogs);
-        console.log(blogs.data);
-        console.log(blogs.message);
         setIsPending(false)
-        setData(blogs.data)
+        setData(blogs)
     }
+    const DeleteHAndle = () => {
+        console.log('delete');
+        console.log(urlDelete + id);
+        fetch(urlDelete + id, {
+            method: 'DELETE',
+        }).then( () => {
+            history.push('/')
+            console.log(' item deleted');
+
+        })
+    }
+
 
     useEffect(() => {
         get_All_data()
@@ -31,19 +47,26 @@ const Details = () => {
         
       }
     }, [])
+
+    let update = `/update/${id}`
     
     return (  
 
         <> Details
         
-         <h1> {data.name}</h1>
-         <h1> {data.description}</h1>
+         <h1> {data.F_name}</h1>
+         <h1> {data.L_name}</h1>
 
-         <h1> {data.title}</h1>
+         <h1> {data.email}</h1>
 
-         <h1> {data.createdAt}</h1>
+         <h1> {data.created_at}</h1>
 
-         <h2>{data.updatedAt}</h2>
+         <h2>{data.updated_at}</h2>
+
+
+         <Link to={update}> <button >Update</button></Link>
+         <button onClick={DeleteHAndle}>Delate</button>
+
 
         </>
     );
