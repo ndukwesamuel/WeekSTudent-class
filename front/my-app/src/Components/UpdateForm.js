@@ -1,89 +1,72 @@
-// import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useState } from "react";
+import { useHistory } from "react-router-dom";
 
-import { useEffect, useState } from "react";
-// import { useParams } from "react-router-dom";
-import { useHistory, useParams } from "react-router-dom";
-const url = 'http://127.0.0.1:8000/update/'
+// const update_url = "http://127.0.0.1:8000/"
 
+const UpdateForm = ({user, usertitle, userDes, userid}) => {
 
-const UpdateForm = ({name, lname, mail, phone,  testid }) => {
-    const {id} = useParams()
     const history = useHistory()
-    const [F_name, setF_name] = useState(name);
-    const [L_name, setL_name] = useState(lname);
-    const [email, setEmail] = useState(mail);
-    const [p_number, setP_number] = useState(phone);
-    // console.log(name);
-
-    // const url =   `http://127.0.0.1:8000/update/${testid}/ `
-    // console.log(url);
-    // console.log(url);
-    const data = {F_name,L_name, email, p_number}
-
-    const handleForm = (e) => {
-        e.preventDefault();
-
-        if(F_name && L_name && email ){
-            fetch(url + testid, {
-                method: 'PATCH',
-                headers:{ "Content-Type": "application/json" },
-                body: JSON.stringify(data)
-
-            }) .then( () => {
-                history.push(`/${testid}`)
-                console.log('uPDATE blog added'); 
-            }).catch( (err) => {
-                console.log(err);
-            })
-        }
+    const [name, setName] = useState(user)
+    const [title, setTitle] = useState(usertitle)
+ const [description, setDescription] = useState(userDes)
+const url =   `http://127.0.0.1:8000/${userid}/`
+console.log(url);
 
 
 
-    }
+ const handleForm = (e) => {
 
-    useEffect(() => {
-      
-    
-      return () => {
-        
-      }
-    }, [])
-    
+ 
+    e.preventDefault();
+
+     console.log('workin');
+
+     const data = {name, title, description}
+
+     if(data){
+         fetch(url, {
+             method: 'PATCH', 
+             headers:{ "Content-Type": "application/json" },
+             body: JSON.stringify(data)
+
+         }).then( () => history.push('/'))
+     }
+ }
     return ( 
 
-        
+        <>
 
-        <div>  Update Form
+            <h1>  Update Form</h1>
+
+
 
 
             
-<form   onSubmit={handleForm}>
-            <label htmlFor=""> First name</label>
-            <input type="text" name="F_name" value={F_name} id=""
-            onChange={(e) => setF_name(e.target.value) }
-            />
+            <form >
 
-            <label htmlFor=""> last name</label>
-            <input type="text" name="L_name" value={L_name} id=""
-            onChange={(e) => setL_name(e.target.value)}
-            />
+                <label htmlFor=""> User Name</label>
+                <input type="text" value={name} name="name"  id=""
+                onChange={(e) => setName(e.target.value)}
+                />
 
-            <label htmlFor=""> email</label>
-            <input type="text" name="email"  value={email} id="" 
-            onChange={(e) => setEmail(e.target.value)}
-            />
 
-<label htmlFor=""> phone number</label>
-            <input type="text" name="body"  value={p_number} id="" 
-            onChange={(e) => setP_number(e.target.value)}
-            />
+                <label htmlFor=""> Title</label>
+                <input type="text" value={title} name="title"  id=""
+                 onChange={(e) => setTitle(e.target.value)}
+                />
 
-            <button type='submit' onClick={handleForm}> submit</button>
+                <label htmlFor=""> Description</label>
+                    <textarea name="description" id="" cols="30" value={description} rows="10"
+                     onChange={(e) => setDescription(e.target.value)}
+                    ></textarea>
 
+                    <button onClick={handleForm}> submit</button>
 
             </form>
-            
-             </div>
+
+
+        </>
+
      );
 }
  

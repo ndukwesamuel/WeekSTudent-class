@@ -2,12 +2,8 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Create from './Page/Create';
 import Details from './Page/Details';
-
 import Home from "./Page/Home";
 import Update from './Page/Update';
-
-
-
 
 
 
@@ -25,21 +21,19 @@ const App = () => {
         <Route exact path='/'>
             <Home  /> 
         </Route>
-             
-        <Route  path='/create'>
+
+        <Route exact path='/create'>
             <Create  /> 
         </Route>
 
-
-        <Route path="/update/:id">
-              <Update />
+        
+        <Route  path='/update/:id'>
+            <Update  /> 
         </Route>
 
-        
         <Route  path='/:id'>
             <Details  /> 
         </Route>
-   
       
 
 

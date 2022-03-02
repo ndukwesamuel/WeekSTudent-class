@@ -1,58 +1,63 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Up from "../Components/Up";
 import UpdateForm from "../Components/UpdateForm";
-
-const update_url = 'http://127.0.0.1:8000/details/'
-
-
-
+const urlDetails = 'http://127.0.0.1:8000/'
 
 
 
 const Update = () => {
-    const {id} = useParams()    
-    const url = update_url + id
 
-    console.log(url);
+    const {id} = useParams()
     const [data, setData] = useState(false)
-
-    const getUsers = async () => {
-        const response = await fetch(url);
-        // console.log(response)
-        const users = await response.json();
-        setData(users);
-        console.log(users);
-        // console.log(users);
-      };
+    console.log(id);
+    const url = urlDetails + id
 
 
-      useEffect(() => {
+    const get_All_data = async () => {
+        const res = await fetch(url)
+        const blogs = await res.json()
+        setData(blogs.data)
+        console.log(blogs.data);
+    }
+
+
+    useEffect(() => {
+        get_All_data()
+    
+      return () => {
         
-        getUsers()
-      
-        return () => {
-          ;
-        };
-      }, []);
+      }
+    }, [])
+    
 
 
-    return (
 
-        <div>
-            Update
+    return (  
 
-            {data &&
-             <UpdateForm  
-            name={data.F_name} 
-            lname={data.L_name}
-            mail={data.email}
-            phone={data.p_number}
-            testid = {data.id}
 
+        
+            <>
+
+                <h1> Update</h1>
+
+             <h1>    {id}</h1>
+
+             
+
+
+             {data && <UpdateForm  user={data.name}
+                usertitle={data.title}
+                userDes = {data.description}
+                userid = {data._id}
              />}
-        </div>
-      );
+
+
+
+            
+            </>
+
+
+    );
 }
  
 export default Update;

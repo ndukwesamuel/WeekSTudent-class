@@ -7,9 +7,9 @@ const Allblog = ({blogs}) => {
         <div> 
             {blogs.map( blog => {
                 return(
-                    <div key={blog.id}>  
-                    <Link to={`/${blog.id}`}>   <h1> {blog.F_name}</h1>  </Link>  
-                       
+                    <div key={blog._id}>  
+                    <Link to={`/${blog._id}`}>   <h1> {blog.name}</h1>  </Link>  
+                        <h2> {blog.title}</h2>
                         <h3>{blog.createdAt}</h3>
                     </div>
                 )

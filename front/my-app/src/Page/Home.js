@@ -11,9 +11,9 @@ const Home = () => {
     const get_All_data = async () => {
         const res = await fetch(url)
         const blogs = await res.json()
-
+        console.log(blogs);
         setIsPending(false)
-        setData(blogs)
+        setData(blogs.data)
     }
 
     useEffect(() => {

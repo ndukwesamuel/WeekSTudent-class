@@ -1,80 +1,65 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useState } from "react";
+import { useHistory } from "react-router-dom";
+const url = 'http://127.0.0.1:8000/create'
 
-// const url = 'http://127.0.0.1:8000/create/'
-const url = 'http://127.0.0.1:8000/create/'
-
-
-
-
-function Create() {
+  
+const Create = () => {
     const history = useHistory()
-    const [F_name, setF_name] = useState('');
-    const [L_name, setL_name] = useState('');
-    const [email, setEmail] = useState('');
-    const [p_number, setP_number] = useState('');
-    
+    const [name, setName] = useState('nie')
+    const [title, setTitle] = useState('see me')
+ const [description, setDescription] = useState(' looo')
 
 
     const handleForm = (e) => {
         e.preventDefault();
+        // console.log('working');
+        // console.log(e);
+        // console.log(name, title,description );
+        const data = {name, title, description}
 
-        console.log('workinh');
-        console.log(F_name);
-        console.log(L_name);
-        // console.log(body);
-
-        const data = {F_name,L_name, email, p_number}
-
-        if(F_name && L_name && email){
-            fetch(url,{
-                method: 'POST',
+        if(data){
+            fetch(url, {
+                method: 'POST', 
                 headers:{ "Content-Type": "application/json" },
                 body: JSON.stringify(data)
 
-            }) .then( () => {
-                history.push('/')
-                console.log('new blog added'); 
-            })
+            }).then( () => history.push('/'))
         }
-
-
-
     }
 
-  return( <div>
 
-            <h1>Create</h1>
+    return ( 
+
+           <>
+            <h1>  Create a Blog Post</h1>
+
+            <form >
+
+                <label htmlFor=""> User Name</label>
+                <input type="text" value={name} name="name"  id=""
+                onChange={(e) => setName(e.target.value)}
+                />
 
 
-            <form   onSubmit={handleForm}>
-            <label htmlFor=""> First name</label>
-            <input type="text" name="F_name" value={F_name} id=""
-            onChange={(e) => setF_name(e.target.value) }
-            />
+                <label htmlFor=""> Title</label>
+                <input type="text" value={title} name="title"  id=""
+                 onChange={(e) => setTitle(e.target.value)}
+                />
 
+                <label htmlFor=""> Description</label>
+                    <textarea name="description" id="" cols="30" value={description} rows="10"
+                     onChange={(e) => setDescription(e.target.value)}
+                    ></textarea>
 
-            <label htmlFor=""> last name</label>
-            <input type="text" name="L_name" value={L_name} id=""
-            onChange={(e) => setL_name(e.target.value)}
-            />
-
-            <label htmlFor=""> email</label>
-            <input type="text" name="email"  value={email} id="" 
-            onChange={(e) => setEmail(e.target.value)}
-            />
-
-<label htmlFor=""> phone number</label>
-            <input type="text" name="body"  value={p_number} id="" 
-            onChange={(e) => setP_number(e.target.value)}
-            />
-
-            <button type='submit' onClick={handleForm}> submit</button>
-
+                    <button onClick={handleForm}> submit</button>
 
             </form>
+           
+           </>
 
-  </div>)
+
+            
+     );
 }
-
+ 
 export default Create;
